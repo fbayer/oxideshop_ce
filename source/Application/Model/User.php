@@ -14,6 +14,7 @@ use OxidEsales\Eshop\Core\Exception\UserException;
 use OxidEsales\Eshop\Core\Field;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopCommunity\Internal\Domain\Authentication\Bridge\PasswordServiceBridgeInterface;
+use OxidEsales\EshopCommunity\Internal\Domain\Authentication\Bridge\RandomTokenGeneratorBridgeInterface;
 use oxpasswordhasher;
 use oxsha512hasher;
 
@@ -2002,21 +2003,15 @@ class User extends \OxidEsales\Eshop\Core\Model\BaseModel
     /**
      * Generates or resets and saves users update key
      *
-     * @param bool $blReset marker to reset update info
+     * @param bool $reset marker to reset update info
      */
-    public function setUpdateKey($blReset = false)
+    public function setUpdateKey($reset = false)
     {
-        $utilsObject = $this->getUtilsObjectInstance();
-        $sUpKey = $blReset ? '' : $utilsObject->generateUId();
-        $iUpTime = $blReset ? 0 : Registry::getUtilsDate()->getTime() + $this->getUpdateLinkTerm();
+        $token = $reset ? '' : $this->getRandomToken();
+        $tokenExpirationTime = $reset ? 0 : Registry::getUtilsDate()->getTime() + $this->getUpdateLinkTerm();
 
-        // generating key
-        $this->oxuser__oxupdatekey = new \OxidEsales\Eshop\Core\Field($sUpKey, Field::T_RAW);
-
-        // setting expiration time for 6 hours
-        $this->oxuser__oxupdateexp = new \OxidEsales\Eshop\Core\Field($iUpTime, Field::T_RAW);
-
-        // saving
+        $this->oxuser__oxupdatekey = new Field($token, Field::T_RAW);
+        $this->oxuser__oxupdateexp = new Field($tokenExpirationTime, Field::T_RAW);
         $this->save();
     }
 
@@ -2811,5 +2806,11 @@ class User extends \OxidEsales\Eshop\Core\Model\BaseModel
                  . \OxidEsales\Eshop\Core\DatabaseProvider::getDb()->quote($user);
 
         return $query;
+    }
+
+    private function getRandomToken(): string
+    {
+        $tokenGenerator = $this->getContainer()->get(RandomTokenGeneratorBridgeInterface::class);
+        return $tokenGenerator->getAlphanumericToken(32);
     }
 }

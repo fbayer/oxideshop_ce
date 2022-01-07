@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [6.10.1] - Unreleased
+
+### Changed
+- Improved reset password token generation algorithm [#0006394](https://bugs.oxid-esales.com/view.php?id=6394)
+
 ## [6.10.0] - 2021-12-02
 
 ### Added
