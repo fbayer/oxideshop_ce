@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [6.11.0] - Unreleased
+
+### Added
+- PHP 8.1 support
+
 ## [6.10.0] - 2021-12-02
 
 ### Added
