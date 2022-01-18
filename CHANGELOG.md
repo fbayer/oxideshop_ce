@@ -360,6 +360,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - [PR-834](https://github.com/OXID-eSales/oxideshop_ce/pull/834)
   - [PR-842](https://github.com/OXID-eSales/oxideshop_ce/pull/842)
 
+## [6.11.0] - Unreleased
+
+### Added
+- PHP 8.1 support
+- 
+- ### Changed
+- Updated Symfony components
+
 ## [6.10.0] - 2021-12-02
 
 ### Added

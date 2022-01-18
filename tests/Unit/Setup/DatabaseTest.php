@@ -23,6 +23,12 @@ final class DatabaseTest extends \OxidTestCase
     /** @var array Queries will be logged here. */
     private $loggedQueries;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->loggedQueries = new StdClass();
+    }
+
     protected function tearDown(): void
     {
         // restore database
@@ -188,6 +194,7 @@ final class DatabaseTest extends \OxidTestCase
         $database->createDb("");
     }
 
+
     /**
      * Testing SetupDb::saveShopSettings()
      */
@@ -227,7 +234,6 @@ final class DatabaseTest extends \OxidTestCase
             ]
         );
     }
-
 
     public function testSaveShopSettingsIfLanguageParamsIsNotArray(): void
     {
@@ -274,7 +280,6 @@ final class DatabaseTest extends \OxidTestCase
             ]
         );
     }
-
     /**
      * Testing SetupDb::writeAdminLoginData()
      */
@@ -320,19 +325,6 @@ final class DatabaseTest extends \OxidTestCase
         $database->writeAdminLoginData($loginName, $password);
     }
 
-
-    /**
-     * Resets logged queries.
-     */
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->loggedQueries = new StdClass();
-    }
-
-    /**
-     * @return PDO
-     */
     protected function createConnection(): PDO
     {
         $config = $this->getConfig();
