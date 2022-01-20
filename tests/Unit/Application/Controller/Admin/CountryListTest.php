@@ -5,15 +5,14 @@
  * See LICENSE file for license details.
  */
 
+declare(strict_types=1);
+
 namespace OxidEsales\EshopCommunity\Tests\Unit\Application\Controller\Admin;
 
 use \Exception;
 use \oxTestModules;
 
-/**
- * Tests for Country_List class
- */
-class CountryListTest extends \OxidTestCase
+final class CountryListTest extends \OxidTestCase
 {
 
     /**
@@ -56,7 +55,7 @@ class CountryListTest extends \OxidTestCase
      * Test, that the country list adds the sorting by oxtitle, if there is only the oxactive sorting given.
      * We do this, cause mysql sees the order of the remainder (after sorting by active) as undefined.
      */
-    public function testAddingSortingByTitleWhenOnlyActiveIsGiven()
+    public function testAddingSortingByTitleWhenOnlyActiveIsGiven(): void
     {
         $view = oxNew('Country_List');
 
@@ -75,16 +74,9 @@ class CountryListTest extends \OxidTestCase
         $this->assertEquals('Afghanistan', $firstInactiveTitle);
     }
 
-    /**
-     * Determine, if the given country is active.
-     *
-     * @param oxCountry $country The country we want to know, if it is activated.
-     *
-     * @return bool Is the given country active?
-     */
-    private function isCountryActive($country)
+    private function isCountryActive($country): bool
     {
-        return '1' === $country->oxcountry__oxactive->value;
+        return 1 === $country->oxcountry__oxactive->value;
     }
 
     /**
